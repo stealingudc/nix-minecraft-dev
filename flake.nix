@@ -3,11 +3,13 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
+    npm-package.url = "github:netbrain/npm-package";
   };
 
   outputs = {
     nixpkgs,
     flake-utils,
+    npm-package,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
@@ -33,6 +35,10 @@
 
           flite
           jetbrains.idea
+          (npm-package.lib.${pkgs.system}.npmPackage {
+            name = "fabric";
+            packageName = "@fabricmc/cli";
+          })
         ];
         java = pkgs.jetbrains.jdk-no-jcef;
       in {
